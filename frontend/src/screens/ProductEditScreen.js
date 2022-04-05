@@ -65,6 +65,7 @@ const ProductEditScreen = ({ match, history }) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
+
     setUploading(true);
 
     try {
@@ -75,11 +76,10 @@ const ProductEditScreen = ({ match, history }) => {
       };
 
       const { data } = await axios.post("/api/upload", formData, config);
-
       setImage(data);
       setUploading(false);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       setUploading(false);
     }
   };
@@ -147,6 +147,7 @@ const ProductEditScreen = ({ match, history }) => {
                 label="Choose file"
                 custom
                 onChange={uploadFileHandler}
+                name="image"
               ></Form.File>
               {uploading && <Loader />}
             </FormGroup>
